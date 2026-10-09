@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - MiniShop</title>
+</head>
+<body>
+    <header class="site-header">
+        <h1>MiniShop</h1>
+        <nav class="main-nav">
+            <a href="index.html">Trang chủ</a>
+            <a href="about.html">Giới thiệu</a>
+            <a href="register.html">Đăng ký</a>
+            <a href="cart.html">Giỏ hàng</a>
+            <a href="login.html">Đăng nhập</a>
+            <a href="contact.html">Liên hệ</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Giỏ hàng</h2>
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Chuột không dây M1</th>
+                    <td>250.000 đ</td>
+                    <td><input type="number" name="quantity-mouse" min="1" value="1"
+                        aria-label="Số lượng Chuột không dây M1"></td>
+                    <td>250.000 đ</td>
+                </tr>
+                <tr>
+                    <th scope="row">Bàn phím cơ K2</th>
+                    <td>790.000 đ</td>
+                    <td><input type="number" name="quantity-keyboard" min="1" value="1"
+                        aria-label="Số lượng Bàn phím cơ K2"></td>
+                    <td>790.000 đ</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row" colspan="3">Tổng tiền</th>
+                    <td>1.040.000 đ</td>
+                </tr>
+            </tfoot>
+        </table>
+        <p><button type="button">Đặt hàng</button></p>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 MiniShop. Dự án thực hành lập trình web.</p>
+    </footer>
+</body>
+</html>
