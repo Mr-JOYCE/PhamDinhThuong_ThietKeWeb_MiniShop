@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giới thiệu - MiniShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <h1>MiniShop</h1>
         <nav class="main-nav">
             <a href="index.html">Trang chủ</a>
-            <a href="about.html">Giới thiệu</a>
+            <a href="product.html">Sản phẩm</a>
+            <a href="about.html" class="active" aria-current="page">Giới thiệu</a>
             <a href="register.html">Đăng ký</a>
-            <a href="cart.html">Giỏ hàng</a>
+            <a href="cart.html">Giỏ hàng <span class="cart-count">0</span></a>
             <a href="login.html">Đăng nhập</a>
             <a href="contact.html">Liên hệ</a>
         </nav>
@@ -51,14 +54,13 @@
             Điện thoại: <a href="tel:0900000000">0900 000 000</a><br>
             Tài liệu tham khảo HTML:
             <a href="https://developer.mozilla.org/vi/docs/Web/HTML"
-            target="_blank">MDN Web Docs</a>
-            <p><a href="index.html">Quay về trang chủ</a></p>
+            target="_blank" rel="noopener noreferrer">MDN Web Docs</a>
         </p>
+        <p><a href="index.html">Quay về trang chủ</a></p>
     </main>
 
     <footer class="site-footer">
         <p>&copy; 2026 MiniShop. Dự án thực hành lập trình web.</p>
     </footer>
-
 </body>
 </html>

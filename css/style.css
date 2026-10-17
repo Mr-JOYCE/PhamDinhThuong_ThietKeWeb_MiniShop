@@ -1,0 +1,436 @@
+:root {
+    --primary: #1f4e79;
+    --primary-dark: #163a5a;
+    --accent: #e67e22;
+    --accent-dark: #cf6d17;
+    --text: #222222;
+
+    --muted: #666666;
+    --border: #dddddd;
+    --bg: #f5f6f8;
+    --white: #ffffff;
+    --danger: #c0392b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    Line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+h1, h2, h3 {
+    line-height: 1.3;
+}
+
+h2 {
+    color: var(--primary);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.price {
+    color: var(--danger);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 20px;
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.main-nav a {
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: var(--white);
+}
+
+.main-nav a:hover {
+    background-color: var(--primary-dark);
+    text-decoration: none;
+}
+
+.main-nav a.active {
+    background-color: var(--accent);
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--white);
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+.product-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-card h3 {
+    margin: 12px 0 4px;
+    font-size: 1rem;
+}
+
+.product-card .price {
+    margin: 0 0 12px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark);
+    text-decoration: none;
+}
+
+.btn-accent {
+    background-color: var(--accent);
+}
+
+.btn-accent:hover {
+    background-color: var(--accent-dark);
+}
+
+.product-card .btn {
+    width: 100%;
+    margin-top: auto;
+}
+
+.btn:focus-visible,
+.main-nav a:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--white);
+}
+
+.product-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product-info h2 {
+    margin-top: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+}
+
+.site-footer {
+    padding: 16px;
+    background-color: var(--primary);
+    color: #cccccc;
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+.form {
+    max-width: 480px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--white);
+}
+
+.form p {
+    margin: 0 0 14px;
+}
+
+.form label {
+    font-weight: bold;
+}
+
+.form input[type="radio"] + label,
+.form input[type="checkbox"] + label {
+    font-weight: normal;
+}
+
+form input[type="text"],
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="tel"],
+.form select,
+.form textarea {
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.2);
+}
+
+.error {
+    display: block;
+    color: var(--danger);
+    font-size: 0.9rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+}
+
+.cart-table-wrap {
+    overflow-x: auto;
+}
+
+.cart-table {
+    min-width: 640px;
+}
+
+.cart-table .btn-remove {
+    padding: 6px 10px;
+    background-color: var(--danger);
+}
+
+.cart-table .btn-remove:hover {
+    background-color: #962d22;
+}
+
+.confirm-dialog {
+    width: min(440px, calc(100% - 32px));
+    padding: 32px;
+    border: 1px solid #e7d9d7;
+    border-radius: 14px;
+    color: var(--text);
+    text-align: center;
+    box-shadow: 0 24px 70px rgba(17, 32, 48, 0.28);
+}
+
+.confirm-dialog::backdrop {
+    background-color: rgba(17, 32, 48, 0.58);
+    backdrop-filter: blur(3px);
+}
+
+.confirm-dialog[open] {
+    animation: dialog-enter 0.18s ease-out;
+}
+
+.confirm-dialog__mark {
+    display: grid;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    place-items: center;
+    border-radius: 50%;
+    background-color: #fff0ed;
+    color: var(--danger);
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.confirm-dialog h2 {
+    margin: 0 0 10px;
+    color: var(--text);
+    font-size: 1.35rem;
+}
+
+.confirm-dialog p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.confirm-dialog__actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+}
+
+.confirm-dialog__actions .btn {
+    min-height: 44px;
+}
+
+.confirm-dialog .btn-cancel {
+    border: 1px solid var(--border);
+    background-color: var(--white);
+    color: var(--text);
+}
+
+.confirm-dialog .btn-cancel:hover {
+    background-color: var(--bg);
+}
+
+.confirm-dialog .btn-confirm-delete {
+    background-color: var(--danger);
+}
+
+.confirm-dialog .btn-confirm-delete:hover {
+    background-color: #962d22;
+}
+
+@keyframes dialog-enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confirm-dialog[open] {
+        animation: none;
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+th {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f0f4f8;
+}
+
+.cart-table input[type="number"] {
+    width: 70px;
+    padding: 4px 6px;
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+    .product-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .product-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-detail {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .product-list {
+        grid-template-columns: 1fr;
+    }
+
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

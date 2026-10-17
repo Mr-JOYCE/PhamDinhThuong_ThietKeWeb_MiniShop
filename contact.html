@@ -4,23 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liên hệ - MiniShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <h1>MiniShop</h1>
         <nav class="main-nav">
             <a href="index.html">Trang chủ</a>
+            <a href="product.html">Sản phẩm</a>
             <a href="about.html">Giới thiệu</a>
             <a href="register.html">Đăng ký</a>
-            <a href="cart.html">Giỏ hàng</a>
+            <a href="cart.html">Giỏ hàng <span class="cart-count">0</span></a>
             <a href="login.html">Đăng nhập</a>
-            <a href="contact.html">Liên hệ</a>
+            <a href="contact.html" class="active" aria-current="page">Liên hệ</a>
         </nav>
     </header>
 
     <main>
         <h2>Liên hệ với MiniShop</h2>
-        <form class="form" method="post">
+        <form class="form" id="contact-form" method="post">
             <p>
                 <label for="fullname">Họ tên</label><br>
                 <input type="text" id="fullname" name="fullname" required
@@ -38,8 +41,9 @@
             <p>
                 <label for="message">Nội dung</label><br>
                 <textarea id="message" name="message" rows="6" cols="40" required></textarea>
+                <span class="error" id="message-error" aria-live="polite"></span>
             </p>
-            <p><button type="submit">Gửi</button></p>
+            <p><button type="submit" class="btn">Gửi</button></p>
         </form>
     </main>
 

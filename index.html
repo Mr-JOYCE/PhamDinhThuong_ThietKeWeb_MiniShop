@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniShop - Phụ kiện công nghệ</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
     </head>
 
     <body>
         <header class="site-header">
             <h1>MiniShop</h1>
             <nav class="main-nav">
-                <a href="index.html">Trang chủ</a>
+                <a href="index.html" class="active" aria-current="page">Trang chủ</a>
+                <a href="product.html">Sản phẩm</a>
                 <a href="about.html">Giới thiệu</a>
                 <a href="register.html">Đăng ký</a>
-                <a href="cart.html">Giỏ hàng</a>
+                <a href="cart.html">Giỏ hàng <span class="cart-count">0</span></a>
                 <a href="login.html">Đăng nhập</a>
                 <a href="contact.html">Liên hệ</a>
             </nav>
@@ -21,28 +25,49 @@
 
         <main>
             <section>
-                <h2>Sản phẩm nổi bật</h2>
+                <h2>Sản phẩm</h2>
 
                 <div class="product-list">
                     <article class="product-card">
-                        <img src="images/sp01.jpg" alt="Chuột không dây M1" width="200">
+                        <img src="images/sp01.jpg" alt="Chuột không dây màu trắng" width="200">
                         <h3>Chuột không dây M1</h3>
                         <p class="price">250.000 đ</p>
-                        <a href="product.html">Xem chi tiết</a>
+                        <button type="button" class="btn btn-accent add-to-cart" data-id="1">Thêm vào giỏ</button>
                     </article>
 
                     <article class="product-card">
                         <img src="images/sp02.jpg" alt="Bàn phím cơ K2" width="200">
                         <h3>Bàn phím cơ K2</h3>
                         <p class="price">790.000 đ</p>
-                        <a href="product.html">Xem chi tiết</a>
+                        <button type="button" class="btn btn-accent add-to-cart" data-id="2">Thêm vào giỏ</button>
                     </article>
 
                     <article class="product-card">
-                        <img src="images/sp03.jpg" alt="Tai nghe Bluetooth T3" width="200">
+                        <img src="images/sp03.jpg" alt="Tai nghe Bluetooth và hộp sạc màu trắng" width="200">
                         <h3>Tai nghe Bluetooth T3</h3>
                         <p class="price">450.000 đ</p>
-                        <a href="product.html">Xem chi tiết</a>
+                        <button type="button" class="btn btn-accent add-to-cart" data-id="3">Thêm vào giỏ</button>
+                    </article>
+
+                    <article class="product-card">
+                        <img src="images/sp04.jpg" alt="USB SanDisk màu đen" width="200">
+                        <h3>USB SanDisk 128GB</h3>
+                        <p class="price">180.000 đ</p>
+                        <button type="button" class="btn btn-accent add-to-cart" data-id="4">Thêm vào giỏ</button>
+                    </article>
+
+                    <article class="product-card">
+                        <img src="images/sp05.jpg" alt="Webcam Logitech màu đen" width="200">
+                        <h3>Webcam Logitech</h3>
+                        <p class="price">1.200.000 đ</p>
+                        <button type="button" class="btn btn-accent add-to-cart" data-id="5">Thêm vào giỏ</button>
+                    </article>
+
+                    <article class="product-card">
+                        <img src="images/sp06.jpg" alt="Đế tản nhiệt laptop có hai quạt xanh" width="200">
+                        <h3>Đế tản nhiệt laptop</h3>
+                        <p class="price">650.000 đ</p>
+                        <button type="button" class="btn btn-accent add-to-cart" data-id="6">Thêm vào giỏ</button>
                     </article>
                 </div>
             </section>

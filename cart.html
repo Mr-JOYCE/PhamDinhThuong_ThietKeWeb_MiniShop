@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng - MiniShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <h1>MiniShop</h1>
         <nav class="main-nav">
             <a href="index.html">Trang chủ</a>
+            <a href="product.html">Sản phẩm</a>
             <a href="about.html">Giới thiệu</a>
             <a href="register.html">Đăng ký</a>
-            <a href="cart.html">Giỏ hàng</a>
+            <a href="cart.html" class="active" aria-current="page">Giỏ hàng <span class="cart-count">0</span></a>
             <a href="login.html">Đăng nhập</a>
             <a href="contact.html">Liên hệ</a>
         </nav>
@@ -20,39 +23,43 @@
 
     <main>
         <h2>Giỏ hàng</h2>
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th scope="col">Sản phẩm</th>
-                    <th scope="col">Đơn giá</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Chuột không dây M1</th>
-                    <td>250.000 đ</td>
-                    <td><input type="number" name="quantity-mouse" min="1" value="1"
-                        aria-label="Số lượng Chuột không dây M1"></td>
-                    <td>250.000 đ</td>
-                </tr>
-                <tr>
-                    <th scope="row">Bàn phím cơ K2</th>
-                    <td>790.000 đ</td>
-                    <td><input type="number" name="quantity-keyboard" min="1" value="1"
-                        aria-label="Số lượng Bàn phím cơ K2"></td>
-                    <td>790.000 đ</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th scope="row" colspan="3">Tổng tiền</th>
-                    <td>1.040.000 đ</td>
-                </tr>
-            </tfoot>
-        </table>
-        <p><button type="button">Đặt hàng</button></p>
+        <p id="cart-empty">Giỏ hàng đang trống. Hãy chọn sản phẩm bạn muốn mua.</p>
+        <div class="cart-table-wrap">
+            <table class="cart-table" hidden>
+                <thead>
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Thành tiền</th>
+                        <th scope="col"><span class="visually-hidden">Thao tác</span></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row" colspan="3">Tổng cộng</th>
+                        <td id="cart-total">0 ₫</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <p>
+            <button type="button" class="btn btn-accent" id="clear-cart">Xóa giỏ hàng</button>
+            <button type="button" class="btn">Đặt hàng</button>
+        </p>
+
+        <dialog class="confirm-dialog" id="clear-cart-dialog" aria-labelledby="clear-cart-title"
+            aria-describedby="clear-cart-description">
+            <div class="confirm-dialog__mark" aria-hidden="true">!</div>
+            <h2 id="clear-cart-title">Xóa toàn bộ giỏ hàng?</h2>
+            <p id="clear-cart-description">Bạn chắc chắn muốn xóa giỏ hàng? Sản phẩm đã chọn sẽ bị xóa khỏi giỏ.</p>
+            <div class="confirm-dialog__actions">
+                <button type="button" class="btn btn-cancel" id="cancel-clear-cart" autofocus>Giữ lại giỏ hàng</button>
+                <button type="button" class="btn btn-confirm-delete" id="confirm-clear-cart">Xóa giỏ hàng</button>
+            </div>
+        </dialog>
     </main>
 
     <footer class="site-footer">
