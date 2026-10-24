@@ -3,14 +3,47 @@ function formatPrice(amount) {
 }
 
 const CART_KEY = "minishop_cart";
-const products = {
+const PRODUCT_CACHE_KEY = "minishop_product_cache";
+const seededProducts = {
     "1": { name: "Chuột không dây M1", price: 250000, image: "images/sp01.jpg" },
     "2": { name: "Bàn phím cơ K2", price: 790000, image: "images/sp02.jpg" },
     "3": { name: "Tai nghe Bluetooth T3", price: 450000, image: "images/sp03.jpg" },
-    "4": { name: "USB SanDisk 128GB", price: 180000, image: "images/sp04.jpg" },
-    "5": { name: "Webcam Logitech", price: 1200000, image: "images/sp05.jpg" },
-    "6": { name: "Đế tản nhiệt laptop", price: 650000, image: "images/sp06.jpg" }
+    "4": { name: "USB 64GB U4", price: 150000, image: "images/sp04.jpg" },
+    "5": { name: "Webcam Full HD W5", price: 520000, image: "images/sp05.jpg" },
+    "6": { name: "Đế tản nhiệt laptop D6", price: 320000, image: "images/sp06.jpg" }
 };
+
+function readProductCache() {
+    const data = localStorage.getItem(PRODUCT_CACHE_KEY);
+    if (!data) {
+        return {};
+    }
+
+    try {
+        const storedProducts = JSON.parse(data);
+        if (!storedProducts || typeof storedProducts !== "object" || Array.isArray(storedProducts)) {
+            throw new TypeError("Danh sách sản phẩm đã lưu không hợp lệ.");
+        }
+
+        const cachedProducts = {};
+        for (const [id, product] of Object.entries(storedProducts)) {
+            const price = Number(product.price);
+            if (/^\d+$/.test(id) && typeof product.name === "string"
+                && Number.isSafeInteger(price) && price >= 0
+                && typeof product.image === "string") {
+                cachedProducts[id] = { name: product.name, price, image: product.image };
+            }
+        }
+        return cachedProducts;
+    } catch (error) {
+        console.error("Danh mục giỏ hàng đã lưu không hợp lệ, dữ liệu sẽ được làm mới.", error);
+        localStorage.removeItem(PRODUCT_CACHE_KEY);
+        return {};
+    }
+}
+
+const cachedProducts = readProductCache();
+const products = { ...cachedProducts, ...seededProducts };
 
 function getCart() {
     const data = localStorage.getItem(CART_KEY);
@@ -18,7 +51,15 @@ function getCart() {
         return {};
     }
 
-    const storedCart = JSON.parse(data);
+    let storedCart;
+    try {
+        storedCart = JSON.parse(data);
+    } catch (error) {
+        console.error("Giỏ hàng đã lưu không hợp lệ, dữ liệu sẽ được làm mới.", error);
+        localStorage.removeItem(CART_KEY);
+        return {};
+    }
+
     const cart = {};
     for (const id in storedCart) {
         const quantity = Number(storedCart[id]);
@@ -39,13 +80,21 @@ function updateCartCount() {
     for (const id in cart) {
         count += cart[id];
     }
-    const badge = document.querySelector(".cart-count");
-    if (badge) {
+    document.querySelectorAll(".cart-count").forEach(function (badge) {
         badge.textContent = count;
-    }
+    });
 }
 
-function addToCart(productId) {
+function addToCart(productId, productData) {
+    if (!products[productId] && productData
+        && typeof productData.name === "string"
+        && Number.isSafeInteger(productData.price) && productData.price >= 0
+        && typeof productData.image === "string") {
+        products[productId] = productData;
+        cachedProducts[productId] = productData;
+        localStorage.setItem(PRODUCT_CACHE_KEY, JSON.stringify(cachedProducts));
+    }
+
     if (!products[productId]) {
         return;
     }
@@ -58,7 +107,11 @@ function addToCart(productId) {
 
 document.querySelectorAll(".add-to-cart").forEach(function(button) {
     button.addEventListener("click", function() {
-        addToCart(button.dataset.id);
+        addToCart(button.dataset.id, {
+            name: button.dataset.name,
+            price: Number(button.dataset.price),
+            image: button.dataset.image
+        });
     });
 });
 
