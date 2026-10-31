@@ -73,13 +73,11 @@ require __DIR__ . '/includes/header.php';
         </table>
 
         <?php if ((int) $product['stock'] > 0): ?>
-            <p>
-                <button type="button" class="btn btn-accent add-to-cart"
-                        data-id="<?= (int) $product['id'] ?>"
-                        data-name="<?= e($product['name']) ?>"
-                        data-price="<?= (int) $product['price'] ?>"
-                        data-image="<?= e(url($product['image'])) ?>">Thêm vào giỏ</button>
-            </p>
+            <form action="<?= e(url('cart-add.php')) ?>" method="post" class="cart-actions">
+                <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
+                <input type="number" name="quantity" value="1" min="1" max="<?= (int) $product['stock'] ?>">
+                <button type="submit" class="btn btn-accent">Thêm vào giỏ</button>
+            </form>
         <?php endif; ?>
         <p><a href="<?= e(url('index.php')) ?>">&laquo; Quay lại danh sách sản phẩm</a></p>
     </div>

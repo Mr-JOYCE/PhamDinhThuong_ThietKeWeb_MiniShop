@@ -10,7 +10,7 @@ $sortInput = $_GET['sort'] ?? '';
 $sort = is_string($sortInput) ? $sortInput : '';
 
 $categories = $pdo->query('SELECT id, name FROM categories ORDER BY id')->fetchAll();
-$sql = 'SELECT id, name, price, image FROM products';
+$sql = 'SELECT id, name, price, image, stock FROM products';
 $conditions = [];
 $parameters = [];
 
@@ -104,11 +104,14 @@ require __DIR__ . '/includes/header.php';
                 <h3><?= e($product['name']) ?></h3>
                 <p class="price"><?= format_price($product['price']) ?></p>
                 <a href="<?= e(url('product.php?id=' . (int) $product['id'])) ?>" class="btn">Xem chi tiết</a>
-                <button type="button" class="btn btn-accent add-to-cart"
-                        data-id="<?= (int) $product['id'] ?>"
-                        data-name="<?= e($product['name']) ?>"
-                        data-price="<?= (int) $product['price'] ?>"
-                        data-image="<?= e(url($product['image'])) ?>">Thêm vào giỏ</button>
+                <?php if ((int) $product['stock'] > 0): ?>
+                    <form action="<?= e(url('cart-add.php')) ?>" method="post" class="inline-form">
+                        <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
+                        <button type="submit" class="btn btn-accent">Thêm vào giỏ</button>
+                    </form>
+                <?php else: ?>
+                    <p class="muted">Hết hàng</p>
+                <?php endif; ?>
             </article>
         <?php endforeach; ?>
     </div>

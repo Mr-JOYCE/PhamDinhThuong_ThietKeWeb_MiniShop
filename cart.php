@@ -1,46 +1,65 @@
 <?php
 require __DIR__ . '/includes/init.php';
+
+[$items, $total] = get_cart_items($pdo);
+
 $pageTitle = 'Giỏ hàng';
 require __DIR__ . '/includes/header.php';
 ?>
-<section>
-    <h2>Giỏ hàng</h2>
-    <p id="cart-empty">Giỏ hàng đang trống. Hãy chọn sản phẩm bạn muốn mua.</p>
-    <div class="cart-table-wrap">
-        <table class="cart-table" hidden>
-            <thead>
-                <tr>
-                    <th scope="col">Sản phẩm</th>
-                    <th scope="col">Đơn giá</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Thành tiền</th>
-                    <th scope="col"><span class="visually-hidden">Thao tác</span></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-                <tr>
-                    <th scope="row" colspan="3">Tổng cộng</th>
-                    <td id="cart-total">0 ₫</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-    <p>
-        <button type="button" class="btn btn-accent" id="clear-cart">Xóa giỏ hàng</button>
-        <button type="button" class="btn" disabled>Đặt hàng</button>
-    </p>
+<h2>Giỏ hàng</h2>
 
-    <dialog class="confirm-dialog" id="clear-cart-dialog" aria-labelledby="clear-cart-title"
-        aria-describedby="clear-cart-description">
-        <div class="confirm-dialog__mark" aria-hidden="true">!</div>
-        <h2 id="clear-cart-title">Xóa toàn bộ giỏ hàng?</h2>
-        <p id="clear-cart-description">Bạn chắc chắn muốn xóa giỏ hàng? Sản phẩm đã chọn sẽ bị xóa khỏi giỏ.</p>
-        <div class="confirm-dialog__actions">
-            <button type="button" class="btn btn-cancel" id="cancel-clear-cart" autofocus>Giữ lại giỏ hàng</button>
-            <button type="button" class="btn btn-confirm-delete" id="confirm-clear-cart">Xóa giỏ hàng</button>
+<?php if (!$items): ?>
+    <p>Giỏ hàng đang trống. <a href="<?= e(url('index.php')) ?>">Xem sản phẩm</a></p>
+<?php else: ?>
+    <form action="<?= e(url('cart-update.php')) ?>" method="post">
+        <div class="cart-table-wrap">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($items as $item): ?>
+                        <tr data-price="<?= (int) $item['price'] ?>">
+                            <td><?= e($item['name']) ?></td>
+                            <td><?= format_price($item['price']) ?></td>
+                            <td>
+                                <input type="number" class="qty" name="qty[<?= $item['id'] ?>]"
+                                       value="<?= (int) $item['quantity'] ?>" min="1"
+                                       max="<?= min(99, (int) $item['stock']) ?>">
+                            </td>
+                            <td class="line-total"><?= format_price($item['line_total']) ?></td>
+                            <td>
+                                <button type="submit" form="remove-form" name="remove"
+                                        value="<?= $item['id'] ?>" class="btn btn-danger">Xóa</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3">Tổng cộng</th>
+                        <th id="cart-total"><?= format_price($total) ?></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-    </dialog>
-</section>
+
+        <p class="cart-actions">
+            <button type="submit" name="update" value="1" class="btn">Cập nhật giỏ hàng</button>
+            <button type="submit" name="clear" value="1" class="btn btn-danger">Xóa giỏ hàng</button>
+            <a href="<?= e(url('checkout.php')) ?>" class="btn btn-accent">Đặt hàng</a>
+        </p>
+    </form>
+
+    <!-- Form riêng cho các nút "Xóa" từng dòng (nối với nút qua thuộc tính form) -->
+    <form id="remove-form" action="<?= e(url('cart-update.php')) ?>" method="post">
+    </form>
+<?php endif; ?>
 <?php require __DIR__ . '/includes/footer.php'; ?>

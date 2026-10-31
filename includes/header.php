@@ -10,29 +10,23 @@
 <body>
     <header class="site-header">
         <h1><?= e(APP_NAME) ?></h1>
-        <nav class="main-nav" aria-label="Điều hướng chính">
-            <?php
-            $navigation = [
-                ['href' => 'index.php', 'page' => 'index.php', 'label' => 'Trang chủ'],
-                ['href' => 'index.php#products', 'page' => null, 'label' => 'Sản phẩm'],
-                ['href' => 'about.php', 'page' => 'about.php', 'label' => 'Giới thiệu'],
-                ['href' => 'contact.php', 'page' => 'contact.php', 'label' => 'Liên hệ'],
-                ['href' => 'cart.php', 'page' => 'cart.php', 'label' => 'Giỏ hàng'],
-                ['href' => 'login.php', 'page' => 'login.php', 'label' => 'Đăng nhập'],
-                ['href' => 'register.php', 'page' => 'register.php', 'label' => 'Đăng ký'],
-            ];
-            ?>
-            <?php foreach ($navigation as $item): ?>
-                <a href="<?= e(url($item['href'])) ?>"
-                   class="<?= $item['page'] !== null && $currentPage === $item['page'] ? 'active' : '' ?>"
-                   <?= $item['page'] !== null && $currentPage === $item['page'] ? 'aria-current="page"' : '' ?>>
-                    <?= e($item['label']) ?>
-                    <?php if ($item['page'] === 'cart.php'): ?>
-                        (<span id="cart-count" class="cart-count">0</span>)
-                    <?php endif; ?>
-                </a>
-            <?php endforeach; ?>
+        <nav class="main-nav">
+            <a href="<?= e(url('index.php')) ?>">Trang chủ</a>
+            <a href="<?= e(url('about.php')) ?>">Giới thiệu</a>
+            <a href="<?= e(url('contact.php')) ?>">Liên hệ</a>
+            <a href="<?= e(url('cart.php')) ?>">Giỏ hàng (<span id="cart-count"><?= e(cart_count()) ?></span>)</a>
+            <?php if (is_logged_in()): ?>
+                <a href="<?= e(url('orders.php')) ?>">Đơn hàng</a>
+                <a href="<?= e(url('logout.php')) ?>">Đăng xuất (<?= e(current_user()['fullname']) ?>)</a>
+            <?php else: ?>
+                <a href="<?= e(url('login.php')) ?>">Đăng nhập</a>
+                <a href="<?= e(url('register.php')) ?>">Đăng ký</a>
+            <?php endif; ?>
         </nav>
     </header>
 
     <main>
+        <?php $flash = get_flash(); ?>
+        <?php if ($flash): ?>
+            <p class="alert alert-<?= e($flash['type']) ?>"><?= e($flash['message']) ?></p>
+        <?php endif; ?>
