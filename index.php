@@ -41,8 +41,26 @@ $products = $statement->fetchAll();
 $pageTitle = 'Trang chủ';
 require __DIR__ . '/includes/header.php';
 ?>
+<section class="shop-hero">
+    <div class="shop-hero-copy">
+        <p class="hero-kicker">Phụ kiện công nghệ mỗi ngày</p>
+        <h2>Thiết bị tốt cho góc học tập của bạn</h2>
+        <p>Chọn phụ kiện thiết thực, dễ dùng và hợp túi tiền — từ chuột, bàn phím đến âm thanh và lưu trữ.</p>
+        <a href="#products" class="btn btn-accent">Khám phá sản phẩm</a>
+    </div>
+    <div class="shop-hero-image">
+        <img src="<?= e(url('images/sp02.jpg')) ?>" alt="Bàn phím cơ K2">
+        <span class="hero-note">Chọn đúng phụ kiện<br>học tập hiệu quả hơn</span>
+    </div>
+</section>
 <section id="products">
-    <h2>Sản phẩm</h2>
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">Danh mục cửa hàng</p>
+            <h2>Sản phẩm</h2>
+        </div>
+        <p class="muted"><?= count($products) ?> sản phẩm phù hợp</p>
+    </div>
 
     <form action="<?= e(url('index.php')) ?>" method="get" class="search-form">
         <input type="search" name="q" value="<?= e($keyword) ?>" placeholder="Tìm sản phẩm..."
@@ -106,6 +124,7 @@ require __DIR__ . '/includes/header.php';
                 <a href="<?= e(url('product.php?id=' . (int) $product['id'])) ?>" class="btn">Xem chi tiết</a>
                 <?php if ((int) $product['stock'] > 0): ?>
                     <form action="<?= e(url('cart-add.php')) ?>" method="post" class="inline-form">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
                         <button type="submit" class="btn btn-accent">Thêm vào giỏ</button>
                     </form>

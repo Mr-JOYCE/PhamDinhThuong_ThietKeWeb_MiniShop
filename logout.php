@@ -1,6 +1,10 @@
 <?php
 require __DIR__ . '/includes/init.php';
 
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+    redirect('index.php');
+}
+
 // Chỉ xóa thông tin đăng nhập; giỏ hàng trong session vẫn được giữ
 unset($_SESSION['user']);
 session_regenerate_id(true);

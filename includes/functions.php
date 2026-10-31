@@ -57,7 +57,7 @@ function is_logged_in()
 
 function is_admin()
 {
-    return is_logged_in() && current_user()['role'] === 'admin';
+    return is_logged_in() && (current_user()['role'] ?? null) === 'admin';
 }
 
 // Đặt ở đầu những trang bắt buộc đăng nhập
@@ -116,4 +116,74 @@ function order_statuses()
 function order_status_label($status)
 {
     return order_statuses()[$status] ?? $status;
+}
+
+// Require this at the start of every page in admin/.
+function require_admin()
+{
+    require_login();
+    if (!is_admin()) {
+        http_response_code(403);
+        exit('Bạn không có quyền truy cập trang này.');
+    }
+}
+
+// Validate uploaded image contents and store it under a generated filename.
+function upload_image($file)
+{
+    if (!is_array($file) || ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+        $error = is_array($file) ? ($file['error'] ?? UPLOAD_ERR_NO_FILE) : UPLOAD_ERR_NO_FILE;
+        throw new RuntimeException('Tải tệp lên thất bại (mã lỗi ' . (int) $error . ').');
+    }
+    if (($file['size'] ?? 0) > 2 * 1024 * 1024) {
+        throw new RuntimeException('Ảnh không được lớn hơn 2 MB.');
+    }
+
+    $temporaryPath = $file['tmp_name'] ?? '';
+    if (!is_string($temporaryPath) || $temporaryPath === '' || !is_uploaded_file($temporaryPath)) {
+        throw new RuntimeException('Tệp tải lên không hợp lệ.');
+    }
+
+    $imageInfo = getimagesize($temporaryPath);
+    $extensions = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+    ];
+    if ($imageInfo === false || !isset($extensions[$imageInfo['mime']])) {
+        throw new RuntimeException('Chỉ chấp nhận ảnh JPG, PNG hoặc WebP.');
+    }
+
+    $uploadDirectory = __DIR__ . '/../uploads';
+    if (!is_dir($uploadDirectory) || !is_writable($uploadDirectory)) {
+        throw new RuntimeException('Không lưu được ảnh. Hãy kiểm tra quyền ghi của thư mục uploads.');
+    }
+
+    $filename = bin2hex(random_bytes(8)) . '.' . $extensions[$imageInfo['mime']];
+    if (!move_uploaded_file($temporaryPath, $uploadDirectory . '/' . $filename)) {
+        throw new RuntimeException('Không lưu được ảnh. Hãy kiểm tra quyền ghi của thư mục uploads.');
+    }
+    return 'uploads/' . $filename;
+}
+
+function csrf_token()
+{
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function csrf_field()
+{
+    return '<input type="hidden" name="csrf_token" value="' . e(csrf_token()) . '">';
+}
+
+function csrf_verify()
+{
+    $token = $_POST['csrf_token'] ?? '';
+    if (!is_string($token) || !hash_equals(csrf_token(), $token)) {
+        http_response_code(403);
+        exit('Yêu cầu không hợp lệ. Vui lòng tải lại trang và thử lại.');
+    }
 }

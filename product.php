@@ -74,6 +74,7 @@ require __DIR__ . '/includes/header.php';
 
         <?php if ((int) $product['stock'] > 0): ?>
             <form action="<?= e(url('cart-add.php')) ?>" method="post" class="cart-actions">
+                <?= csrf_field() ?>
                 <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
                 <input type="number" name="quantity" value="1" min="1" max="<?= (int) $product['stock'] ?>">
                 <button type="submit" class="btn btn-accent">Thêm vào giỏ</button>

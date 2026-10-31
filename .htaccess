@@ -1,0 +1,4 @@
+Options -Indexes
+
+# Local XAMPP folder is Thietketweb; update this URL if the folder is renamed.
+ErrorDocument 404 /Thietketweb/404.php

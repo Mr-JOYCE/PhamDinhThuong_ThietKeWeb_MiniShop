@@ -3,6 +3,9 @@
 define('APP_NAME', 'MiniShop');
 define('APP_DEBUG', getenv('MINISHOP_DEBUG') !== '0');
 $scriptDirectory = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/minishop/index.php'));
+if (basename($scriptDirectory) === 'admin') {
+    $scriptDirectory = str_replace('\\', '/', dirname($scriptDirectory));
+}
 $defaultBaseUrl = $scriptDirectory === '/' ? '/' : $scriptDirectory . '/';
 define('BASE_URL', rtrim(getenv('MINISHOP_BASE_URL') ?: $defaultBaseUrl, '/') . '/');
 

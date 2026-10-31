@@ -22,5 +22,25 @@ Nếu thư mục chạy có đường dẫn khác, ứng dụng tự nhận đư
 - Đăng ký, đăng nhập và đăng xuất dùng PHP Session; mật khẩu được băm bằng `password_hash()`.
 - Giỏ hàng được lưu trong Session, giá và tồn kho luôn được đọc lại từ cơ sở dữ liệu.
 - Người dùng đã đăng nhập có thể đặt hàng, theo dõi tồn kho theo transaction và xem lịch sử đơn hàng.
+- Quản trị viên có thể thêm/sửa/xóa sản phẩm, tải ảnh an toàn và cập nhật trạng thái đơn hàng.
+- Biểu mẫu POST được bảo vệ bằng CSRF; các thư mục cấu hình, mã dùng chung và CSDL bị chặn truy cập trực tiếp.
 
-Biểu mẫu liên hệ hiện vẫn chỉ là giao diện; lưu và gửi tin nhắn liên hệ chưa thuộc phạm vi Buổi 4.
+## Tạo tài khoản quản trị
+
+1. Đăng ký tài khoản trong MiniShop như người dùng bình thường.
+2. Trong phpMyAdmin, chọn database `minishop` và chạy câu lệnh sau, thay email bằng tài khoản vừa đăng ký:
+
+   ```sql
+   UPDATE users SET role = 'admin' WHERE email = 'email-cua-ban@example.com';
+   ```
+
+3. Đăng xuất rồi đăng nhập lại để nạp quyền mới. Liên kết **Quản trị** sẽ xuất hiện trên thanh điều hướng.
+
+Biểu mẫu liên hệ hiện chỉ kiểm tra dữ liệu phía trình duyệt và CSRF; chức năng lưu/gửi tin nhắn chưa được triển khai.
+
+## Lưu ý XAMPP
+
+- Dự án được thiết kế để đặt trong một thư mục con của `htdocs`, ví dụ `C:\xampp\htdocs\minishop` hoặc `D:\xampp\htdocs\Thietketweb`.
+- Nếu đổi tên thư mục dự án, hãy cập nhật đường dẫn `ErrorDocument 404` trong `.htaccess` theo URL mới.
+- Cổng MySQL mặc định hiện là `3307` để khớp cấu hình XAMPP cục bộ đang dùng. Đổi `MINISHOP_DB_PORT` hoặc `DB_PORT` trong `config/config.php` nếu MySQL của bạn chạy cổng khác.
+- Chỉ import `database/minishop.sql` vào database thử nghiệm: script sẽ xóa và tạo lại các bảng.

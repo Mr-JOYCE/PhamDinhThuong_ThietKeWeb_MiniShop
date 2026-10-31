@@ -39,6 +39,7 @@ require __DIR__ . '/includes/header.php';
 <h2>Đăng nhập</h2>
 
 <form action="<?= e(url('login.php')) ?>" method="post" class="form">
+    <?= csrf_field() ?>
     <?php if ($error): ?>
         <p class="alert alert-error"><?= e($error) ?></p>
     <?php endif; ?>

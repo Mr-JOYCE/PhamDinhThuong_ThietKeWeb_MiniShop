@@ -12,6 +12,7 @@ require __DIR__ . '/includes/header.php';
     <p>Giỏ hàng đang trống. <a href="<?= e(url('index.php')) ?>">Xem sản phẩm</a></p>
 <?php else: ?>
     <form action="<?= e(url('cart-update.php')) ?>" method="post">
+        <?= csrf_field() ?>
         <div class="cart-table-wrap">
             <table class="cart-table">
                 <thead>
@@ -36,7 +37,8 @@ require __DIR__ . '/includes/header.php';
                             <td class="line-total"><?= format_price($item['line_total']) ?></td>
                             <td>
                                 <button type="submit" form="remove-form" name="remove"
-                                        value="<?= $item['id'] ?>" class="btn btn-danger">Xóa</button>
+                                        value="<?= $item['id'] ?>" class="btn btn-danger"
+                                        data-confirm="Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?">Xóa</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -53,13 +55,15 @@ require __DIR__ . '/includes/header.php';
 
         <p class="cart-actions">
             <button type="submit" name="update" value="1" class="btn">Cập nhật giỏ hàng</button>
-            <button type="submit" name="clear" value="1" class="btn btn-danger">Xóa giỏ hàng</button>
+            <button type="submit" name="clear" value="1" class="btn btn-danger"
+                    data-confirm="Bạn có muốn xóa toàn bộ sản phẩm khỏi giỏ hàng không?">Xóa giỏ hàng</button>
             <a href="<?= e(url('checkout.php')) ?>" class="btn btn-accent">Đặt hàng</a>
         </p>
     </form>
 
     <!-- Form riêng cho các nút "Xóa" từng dòng (nối với nút qua thuộc tính form) -->
     <form id="remove-form" action="<?= e(url('cart-update.php')) ?>" method="post">
+        <?= csrf_field() ?>
     </form>
 <?php endif; ?>
 <?php require __DIR__ . '/includes/footer.php'; ?>

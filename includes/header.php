@@ -8,21 +8,39 @@
     <script src="<?= e(url('js/main.js')) ?>" defer></script>
 </head>
 <body>
+    <?php
+    $currentPage = basename($_SERVER['SCRIPT_NAME'] ?? '');
+    $requestPath = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+    $isAdminArea = strpos($requestPath, '/admin/') !== false;
+    ?>
     <header class="site-header">
-        <h1><?= e(APP_NAME) ?></h1>
-        <nav class="main-nav">
-            <a href="<?= e(url('index.php')) ?>">Trang chủ</a>
-            <a href="<?= e(url('about.php')) ?>">Giới thiệu</a>
-            <a href="<?= e(url('contact.php')) ?>">Liên hệ</a>
-            <a href="<?= e(url('cart.php')) ?>">Giỏ hàng (<span id="cart-count"><?= e(cart_count()) ?></span>)</a>
+        <div class="header-inner">
+            <a class="brand" href="<?= e(url('index.php')) ?>" aria-label="MiniShop - Trang chủ">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span><?= e(APP_NAME) ?></span>
+            </a>
+            <nav class="main-nav" aria-label="Điều hướng chính">
+            <a href="<?= e(url('index.php')) ?>" class="<?= $currentPage === 'index.php' && !$isAdminArea ? 'active' : '' ?>">Trang chủ</a>
+            <a href="<?= e(url('about.php')) ?>" class="<?= $currentPage === 'about.php' ? 'active' : '' ?>">Giới thiệu</a>
+            <a href="<?= e(url('contact.php')) ?>" class="<?= $currentPage === 'contact.php' ? 'active' : '' ?>">Liên hệ</a>
+            <a href="<?= e(url('cart.php')) ?>" class="nav-cart <?= $currentPage === 'cart.php' ? 'active' : '' ?>">
+                Giỏ hàng <span id="cart-count" class="cart-count"><?= e(cart_count()) ?></span>
+            </a>
             <?php if (is_logged_in()): ?>
-                <a href="<?= e(url('orders.php')) ?>">Đơn hàng</a>
-                <a href="<?= e(url('logout.php')) ?>">Đăng xuất (<?= e(current_user()['fullname']) ?>)</a>
+                <?php if (is_admin()): ?>
+                    <a href="<?= e(url('admin/products.php')) ?>" class="<?= $isAdminArea ? 'active' : '' ?>">Quản trị</a>
+                <?php endif; ?>
+                <a href="<?= e(url('orders.php')) ?>" class="<?= $currentPage === 'orders.php' ? 'active' : '' ?>">Đơn hàng</a>
+                <form action="<?= e(url('logout.php')) ?>" method="post" class="nav-form">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="nav-logout">Đăng xuất</button>
+                </form>
             <?php else: ?>
-                <a href="<?= e(url('login.php')) ?>">Đăng nhập</a>
-                <a href="<?= e(url('register.php')) ?>">Đăng ký</a>
+                <a href="<?= e(url('login.php')) ?>" class="<?= $currentPage === 'login.php' ? 'active' : '' ?>">Đăng nhập</a>
+                <a href="<?= e(url('register.php')) ?>" class="<?= $currentPage === 'register.php' ? 'active' : '' ?>">Đăng ký</a>
             <?php endif; ?>
-        </nav>
+            </nav>
+        </div>
     </header>
 
     <main>

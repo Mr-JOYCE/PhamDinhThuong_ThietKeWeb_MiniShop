@@ -6,6 +6,7 @@ require __DIR__ . '/includes/header.php';
 <section>
     <h2>Liên hệ với MiniShop</h2>
     <form class="form" id="contact-form" method="post">
+        <?= csrf_field() ?>
         <p>
             <label for="fullname">Họ tên</label><br>
             <input type="text" id="fullname" name="fullname" required autocomplete="name">
